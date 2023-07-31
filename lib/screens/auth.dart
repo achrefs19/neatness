@@ -4,13 +4,17 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_projects/Components/icon_button.dart';
+import 'package:flutter_projects/Components/flat_button.dart';
 import 'package:flutter_projects/Components/my_alert_dialog.dart';
 import 'package:flutter_projects/Components/rounded_button.dart';
 import 'package:flutter_projects/Components/rounded_text_field.dart';
 import 'package:flutter_projects/Components/user_image_picker.dart';
 import 'package:flutter_projects/constants.dart';
 import 'package:flutter_projects/models/userEntity.dart';
+
+import 'package:file/local.dart';
+import 'package:shell/shell.dart';
+
 
 class Inscription extends StatefulWidget {
   const Inscription({super.key});
@@ -35,7 +39,6 @@ class _InscriptionState extends State<Inscription> {
       if (_isLogin) {
         userCredentials = await _firebase.signInWithEmailAndPassword(
             email: user.email, password: user.password);
-        print("+{$userCredentials}");
       } else {
         userCredentials = await _firebase.createUserWithEmailAndPassword(
             email: user.email, password: user.password);
@@ -48,6 +51,7 @@ class _InscriptionState extends State<Inscription> {
           .child('${userCredentials.user!.uid}.jpg');
       //put file in storage
       await storageRef.putFile(_selectedImage!);
+
       final imageUrl = await storageRef.getDownloadURL();
 
       await FirebaseFirestore.instance.collection('users').doc(userCredentials.user!.uid).set({

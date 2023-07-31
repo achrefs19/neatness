@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_projects/constants.dart';
 
@@ -7,9 +9,10 @@ class RoundedTextField extends StatelessWidget {
   final String _txtLabel;
   final IconData _prefixIcon;
   final String hintText;
+  final double radius;
   final bool isPassword;
 
-  RoundedTextField({Key? key , this.isPassword=false ,required Function this.validator,required Function this.onSaved ,required IconData prefixIcon, this.hintText = "Type in your text",required String txtLabel}): _prefixIcon=prefixIcon, _txtLabel=txtLabel, super(key: key);
+  RoundedTextField({Key? key , this.radius = 30, this.isPassword=false ,required Function this.validator,required Function this.onSaved ,required IconData prefixIcon, this.hintText = "Type in your text",required String txtLabel}): _prefixIcon=prefixIcon, _txtLabel=txtLabel, super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -18,17 +21,17 @@ class RoundedTextField extends StatelessWidget {
       obscureText: isPassword,
       decoration: new InputDecoration(
         suffixStyle: const TextStyle(color: primaryColor),
-        prefixIcon: Icon(_prefixIcon,color: secondaryColor),
+        prefixIcon: Icon(_prefixIcon,color: primaryColor),
         label: Text(_txtLabel, style: TextStyle(fontSize: 20)),
         enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(30.0),
+          borderRadius: BorderRadius.circular(radius),
           borderSide: const BorderSide(
             color: primaryColor
           )
         ),
         border: OutlineInputBorder(
 
-          borderRadius: BorderRadius.circular(30.0),
+          borderRadius: BorderRadius.circular(radius),
           borderSide: BorderSide(
             style: BorderStyle.none
           )
